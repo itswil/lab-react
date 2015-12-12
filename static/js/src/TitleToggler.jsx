@@ -1,22 +1,19 @@
 var React = require('react');
 
-var selectStyle = {
-  display: 'none',
-}
-
-var TitleInput = React.createClass({
-  render: function() {
-    return (
-      <input type="text" placeholder="Enter your title"/>
-    )
-  }
-});
+// var TitleInput = React.createClass({
+//   render: function() {
+//     return (
+//       <input type="text" placeholder="Enter your title"/>
+//     )
+//   }
+// });
 
 var TitleToggler = React.createClass({
   getInitialState: function() {
     return {
       showInput: false,
-      selectedValue: null
+      selectedValue: null,
+      inputValue: null,
     };
   },
 
@@ -24,21 +21,27 @@ var TitleToggler = React.createClass({
     if (event.target.value == 'Other') {
       this.setState({
         showInput: true,
-        selectedValue: event.target.value
+        selectedValue: null,
       });
     } else {
       this.setState({
         showInput: false,
-        selectedValue: event.target.value
+        selectedValue: event.target.value,
       });
     }
-    debugger;
+  },
+
+  handleInput: function(event) {
+    this.setState({
+      inputValue: event.target.value,
+      selectedValue: event.target.value,
+    })
   },
 
   render: function() {
     return (
       <div className="title-toggler">
-        <h1>Title Toggler</h1>
+        <h2>Title Toggler</h2>
         <p>On selecting Other, a textbox will appear for you to type in</p>
         <p>The current selected value is: {this.state.selectedValue}</p>
 
@@ -48,7 +51,7 @@ var TitleToggler = React.createClass({
           <option>Mr</option>
           <option>Other</option>
         </select>
-        { this.state.showInput ? <TitleInput /> : null }
+        { this.state.showInput ? <input type="text" placeholder="Enter your title" onChange={this.handleInput} inputValue={this.state.inputValue} /> : null }
       </div>
     );
   }
